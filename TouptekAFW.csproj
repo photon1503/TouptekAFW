@@ -109,6 +109,7 @@
     <Content Include="ASCOM.ico" />
     <Content Include="ASCOM.png" />
     <Content Include="ReadMe.htm" />
+    <Content Include="Setup.iss" />
     <Content Include="toupcam.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

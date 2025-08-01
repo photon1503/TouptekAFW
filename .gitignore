@@ -61,6 +61,7 @@ TestResult.xml
 *.pidb
 *.svclog
 *.scc
+*.exe
 
 # Visual Studio profiler
 *.psess
