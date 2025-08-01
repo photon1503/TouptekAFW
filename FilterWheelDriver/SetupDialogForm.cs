@@ -42,6 +42,10 @@ namespace ASCOM.photonTouptekAFW.FilterWheel
             {
                 FilterWheelHardware.comPort = (string)comboBoxComPort.SelectedItem;
                 FilterWheelHardware.IsBidirectional = chkBidirectional.Checked;
+                if (cntSlots.SelectedValue != null && int.TryParse(cntSlots.SelectedValue.ToString(), out int slots))
+                {
+                    FilterWheelHardware.slots = (short)slots;
+                }
                 tl.LogMessage("Setup OK", $"New configuration values - COM Port: {comboBoxComPort.SelectedItem}");
             }
         }
@@ -90,6 +94,27 @@ namespace ASCOM.photonTouptekAFW.FilterWheel
             }
 
             chkBidirectional.Checked = FilterWheelHardware.IsBidirectional;
+
+            try
+            {
+                if (FilterWheelHardware.slots == 5)
+                {
+                    cntSlots.SelectedIndex = 0;
+                }
+                else if (FilterWheelHardware.slots == 7)
+                {
+                    cntSlots.SelectedIndex = 1;
+                }
+                else if (FilterWheelHardware.slots == 8)
+                {
+                    cntSlots.SelectedIndex = 2;
+                }
+            }
+            catch (Exception ex)
+            {
+                tl.LogMessage("InitUI", $"Error setting slots: {ex.Message}");
+                cntSlots.SelectedIndex = -1; // No valid selection
+            }
 
             tl.LogMessage("InitUI", $"Set UI controls to Trace: {chkTrace.Checked}, COM Port: {comboBoxComPort.SelectedItem}");
         }

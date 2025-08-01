@@ -51,7 +51,7 @@ namespace ASCOM.photonTouptekAFW.FilterWheel
         private static string DriverDescription = ""; // The value is set by the driver's class initialiser.
         internal static string comPort; // COM port name (if required)
         internal static bool IsBidirectional = false; // Flag to indicate whether the filter wheel is bidirectional or not, default is false
-        internal static short slots = 0;
+        internal static short slots = 7;
         private static bool connectedState; // Local server's connected state
         private static bool connecting; // Completion variable for use with the Connect and Disconnect methods
         private static bool runOnce = false; // Flag to enable "one-off" activities only to run once.
@@ -119,7 +119,15 @@ namespace ASCOM.photonTouptekAFW.FilterWheel
 
                 afw = Toupcam.Open(comPort);
 
-                afw.put_Option(eOPTION.OPTION_FILTERWHEEL_SLOT, slots);
+                try
+                {
+                    afw.put_Option(eOPTION.OPTION_FILTERWHEEL_SLOT, slots);
+                }
+                catch (Exception ex)
+                {
+                    LogMessage("InitialiseHardware", $"Exception setting filter wheel slots: {ex.Message}");
+                    throw new InvalidOperationException($"Failed to set filter wheel slots: {ex.Message}", ex);
+                }
                 //afw.get_Option(eOPTION.OPTION_FILTERWHEEL_SLOT, out int slotsValue);
 
                 afw.put_Option(Toupcam.eOPTION.OPTION_FILTERWHEEL_POSITION, -1);  // Calibrate
