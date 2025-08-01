@@ -36,7 +36,7 @@ namespace ASCOM.photonTouptekAFW.FilterWheel
     [ComVisible(true)]
     [Guid("ac169eb4-d7c5-4c76-9305-dc4badd16c4e")]
     [ProgId("ASCOM.photonTouptekAFW.FilterWheel")]
-    [ServedClassName("Touptek AFW by photon")] // Driver description that appears in the Chooser, customise as required
+    [ServedClassName("Touptek AFW #1 by photon")] // Driver description that appears in the Chooser, customise as required
     [ClassInterface(ClassInterfaceType.None)]
     public class FilterWheel : ReferenceCountedObjectBase, IFilterWheelV3, IDisposable
     {
