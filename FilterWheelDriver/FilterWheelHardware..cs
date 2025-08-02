@@ -146,16 +146,23 @@ namespace ASCOM.photonTouptekAFW.FilterWheel
         private static void CalibrateWheel()
 
         {
-            afw.put_Option(Toupcam.eOPTION.OPTION_FILTERWHEEL_POSITION, -1);  // Calibrate
-            int position;
             bool rc = false;
+
+            afw.put_Option(Toupcam.eOPTION.OPTION_FILTERWHEEL_POSITION, -1);  // Calibrate
+            if (!rc)
+            {
+                LogMessage("CalibrateWheel", "Failed to start calibrate filter wheel.");
+                throw new InvalidOperationException("Failed to start calibrate filter wheel.");
+            }
+
+            int position;
             do
             {
                 rc = afw.get_Option(Toupcam.eOPTION.OPTION_FILTERWHEEL_POSITION, out position);
                 if (!rc)
                 {
-                    LogMessage("CalibrateWheel", "Failed to get filter wheel position.");
-                    throw new InvalidOperationException("Failed to get filter wheel position.");
+                    LogMessage("CalibrateWheel", "Failed to calibrate filter wheel.");
+                    throw new InvalidOperationException("Failed calibrate filter wheel.");
                 }
                 if (position == -1)
                 {
