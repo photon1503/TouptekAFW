@@ -1,0 +1,221 @@
+12:48:36.862 ASCOM Universal Device Conformance Checker Version 4.1.0.34702, Build time: Di 17 Dezember 2024 14:02:48
+12:48:36.862 
+12:48:36.862 Operating system is Windows 11 (24H2), Processor is Intel/AMD 64bit, Application is 64bit.
+12:48:36.862 
+12:48:36.862 COM Driver ProgID: ASCOM.photonTouptekAFW.FilterWheel
+12:48:36.862 
+12:48:36.862 CreateDevice                        INFO     Creating NATIVE COM device: ASCOM.photonTouptekAFW.FilterWheel
+12:48:37.097 CreateDevice                        INFO     Successfully created driver
+12:48:38.110 InterfaceVersion                             About to get property InterfaceVersion
+12:48:38.113 CreateDevice                        OK       Found a valid interface version: 3
+12:48:38.113 CreateDevice                        OK       Driver instance created successfully
+12:48:38.113 
+12:48:38.114 Connect to device
+12:48:38.115 Connect                                      About to get Connecting property
+12:48:38.115 Connected                                    About to set Connected property true
+12:48:39.690 Connect                                      About to get Connected property
+12:48:39.692 Connected                           OK       Connected to device successfully using Connected = True
+12:48:40.206 Connected                                    About to set Connected property False
+12:48:40.209 Connected                           OK       Disconnected from device successfully using Connected = False
+12:48:40.209 Connect                                      About to call Connect() method
+12:48:40.210 Connect                                      About to get Connecting property repeatedly
+12:48:40.720 Connect                                      About to get Connected property
+12:48:40.721 Connect                             OK       Connected to device successfully using Connect()
+12:48:40.721 
+12:48:40.721 Common Driver Methods
+12:48:40.721 InterfaceVersion                    OK       3
+12:48:40.721 Connected                                    About to get property Connected
+12:48:40.721 Connected                           OK       True
+12:48:40.721 Description                                  About to get property Description
+12:48:40.723 Description                         OK       Touptek AFW #1 by photon
+12:48:40.723 DriverInfo                                   About to get property DriverInfo
+12:48:40.724 DriverInfo                          OK       Filterwheel driver for Touptek AFW by photon. Version: 7.0
+12:48:40.724 DriverVersion                                About to get property DriverVersion
+12:48:40.725 DriverVersion                       OK       7.0
+12:48:40.725 Name                                         About to get property Name
+12:48:40.727 Name                                OK       TouptekAFW (photon)
+12:48:40.727 
+12:48:40.727 Action                              INFO     Conform cannot test the Action method
+12:48:40.727 SupportedActions                             About to call method SupportedActions
+12:48:40.736 SupportedActions                    OK       Driver returned an empty action list
+12:48:40.737 
+12:48:40.737 DeviceState                                  About to get property DeviceState
+12:48:40.746 DeviceState                         OK       Received 2 operational state properties.
+12:48:40.746 DeviceState                         OK         Position = 0
+12:48:40.746 DeviceState                         OK         TimeStamp = 02.08.2025 12:48:40
+12:48:40.746 DeviceState                         OK       Found all expected operational properties
+12:48:40.746 
+12:48:40.746 Pre-run Checks
+12:48:41.759 Pre-run Check                                About to get Position property repeatedly
+12:48:42.267 Pre-run Check                       OK       Filter wheel is stationary, ready to start tests
+12:48:42.267 
+12:48:42.267 Properties
+12:48:42.267 FocusOffsets Get                             About to get FocusOffsets property
+12:48:42.269 FocusOffsets Get                    OK       Found 7 filter offset values
+12:48:42.269 FocusOffsets Get                    INFO     Filter 0 Offset: 0
+12:48:42.269 FocusOffsets Get                    INFO     Filter 1 Offset: 0
+12:48:42.269 FocusOffsets Get                    INFO     Filter 2 Offset: 0
+12:48:42.269 FocusOffsets Get                    INFO     Filter 3 Offset: 0
+12:48:42.269 FocusOffsets Get                    INFO     Filter 4 Offset: 0
+12:48:42.269 FocusOffsets Get                    INFO     Filter 5 Offset: 0
+12:48:42.269 FocusOffsets Get                    INFO     Filter 6 Offset: 0
+12:48:42.270 Names Get                                    About to get Names property
+12:48:42.271 Names Get                           OK       Found 7 filter names
+12:48:42.271 Names Get                           INFO     Filter 0 Name: Filter 1
+12:48:42.271 Names Get                           INFO     Filter 1 Name: Filter 2
+12:48:42.271 Names Get                           INFO     Filter 2 Name: Filter 3
+12:48:42.271 Names Get                           INFO     Filter 3 Name: Filter 4
+12:48:42.272 Names Get                           INFO     Filter 4 Name: Filter 5
+12:48:42.272 Names Get                           INFO     Filter 5 Name: Filter 6
+12:48:42.272 Names Get                           INFO     Filter 6 Name: Filter 7
+12:48:42.272 Names Get                           OK       Number of filter offsets and number of names are the same: 7
+12:48:42.272 Position Get                                 About to get Position property
+12:48:42.274 Position Get                        OK       Currently at position: 0
+12:48:42.274 
+12:48:42.274 Testing ascending sequential movement
+12:48:42.274 Position Set                                 About to set Position property 0
+12:48:42.276 Position Set 0                               About to get Position property
+12:48:42.279 Position Set 0                               About to get Position property repeatedly
+12:48:42.288 Position Set 0                      OK       Reached position: 0 in: 0,0 seconds
+12:48:43.303 Position Set                                 About to set Position property 1
+12:48:43.309 Position Set 1                               About to get Position property
+12:48:43.312 Position Set 1                               About to get Position property repeatedly
+12:48:44.634 Position Set 1                      OK       Reached position: 1 in: 1,3 seconds
+12:48:45.637 Position Set                                 About to set Position property 2
+12:48:45.643 Position Set 2                               About to get Position property
+12:48:45.646 Position Set 2                               About to get Position property repeatedly
+12:48:46.965 Position Set 2                      OK       Reached position: 2 in: 1,3 seconds
+12:48:47.980 Position Set                                 About to set Position property 3
+12:48:47.986 Position Set 3                               About to get Position property
+12:48:47.989 Position Set 3                               About to get Position property repeatedly
+12:48:49.304 Position Set 3                      OK       Reached position: 3 in: 1,3 seconds
+12:48:50.318 Position Set                                 About to set Position property 4
+12:48:50.324 Position Set 4                               About to get Position property
+12:48:50.327 Position Set 4                               About to get Position property repeatedly
+12:48:51.643 Position Set 4                      OK       Reached position: 4 in: 1,3 seconds
+12:48:52.655 Position Set                                 About to set Position property 5
+12:48:52.661 Position Set 5                               About to get Position property
+12:48:52.664 Position Set 5                               About to get Position property repeatedly
+12:48:53.887 Position Set 5                      OK       Reached position: 5 in: 1,2 seconds
+12:48:54.902 Position Set                                 About to set Position property 6
+12:48:54.908 Position Set 6                               About to get Position property
+12:48:54.911 Position Set 6                               About to get Position property repeatedly
+12:48:56.134 Position Set 6                      OK       Reached position: 6 in: 1,2 seconds
+12:48:57.138 
+12:48:57.138 Testing descending sequential movement
+12:48:57.138 Position Set                                 About to set Position property 6
+12:48:57.139 Position Set 6                               About to get Position property
+12:48:57.142 Position Set 6                               About to get Position property repeatedly
+12:48:57.151 Position Set 6                      OK       Reached position: 6 in: 0,0 seconds
+12:48:58.160 Position Set                                 About to set Position property 5
+12:48:58.166 Position Set 5                               About to get Position property
+12:48:58.169 Position Set 5                               About to get Position property repeatedly
+12:48:59.494 Position Set 5                      OK       Reached position: 5 in: 1,3 seconds
+12:49:00.509 Position Set                                 About to set Position property 4
+12:49:00.515 Position Set 4                               About to get Position property
+12:49:00.518 Position Set 4                               About to get Position property repeatedly
+12:49:01.835 Position Set 4                      OK       Reached position: 4 in: 1,3 seconds
+12:49:02.849 Position Set                                 About to set Position property 3
+12:49:02.855 Position Set 3                               About to get Position property
+12:49:02.858 Position Set 3                               About to get Position property repeatedly
+12:49:04.179 Position Set 3                      OK       Reached position: 3 in: 1,3 seconds
+12:49:05.194 Position Set                                 About to set Position property 2
+12:49:05.200 Position Set 2                               About to get Position property
+12:49:05.203 Position Set 2                               About to get Position property repeatedly
+12:49:06.524 Position Set 2                      OK       Reached position: 2 in: 1,3 seconds
+12:49:07.527 Position Set                                 About to set Position property 1
+12:49:07.533 Position Set 1                               About to get Position property
+12:49:07.536 Position Set 1                               About to get Position property repeatedly
+12:49:08.854 Position Set 1                      OK       Reached position: 1 in: 1,3 seconds
+12:49:09.867 Position Set                                 About to set Position property 0
+12:49:09.873 Position Set 0                               About to get Position property
+12:49:09.876 Position Set 0                               About to get Position property repeatedly
+12:49:11.201 Position Set 0                      OK       Reached position: 0 in: 1,3 seconds
+12:49:12.215 
+12:49:12.215 Testing potentially long distance moves
+12:49:12.215 Position Set                                 About to set Position property 0
+12:49:12.216 Position Set 0                               About to get Position property
+12:49:12.218 Position Set 0                               About to get Position property repeatedly
+12:49:12.227 Position Set 0                      OK       Reached position: 0 in: 0,0 seconds
+12:49:13.243 Position Set                                 About to set Position property 6
+12:49:13.249 Position Set 6                               About to get Position property
+12:49:13.252 Position Set 6                               About to get Position property repeatedly
+12:49:14.475 Position Set 6                      OK       Reached position: 6 in: 1,2 seconds
+12:49:15.487 Position Set                                 About to set Position property 5
+12:49:15.493 Position Set 5                               About to get Position property
+12:49:15.496 Position Set 5                               About to get Position property repeatedly
+12:49:16.816 Position Set 5                      OK       Reached position: 5 in: 1,3 seconds
+12:49:17.818 Position Set                                 About to set Position property 0
+12:49:17.824 Position Set 0                               About to get Position property
+12:49:17.827 Position Set 0                               About to get Position property repeatedly
+12:49:20.340 Position Set 0                      OK       Reached position: 0 in: 2,5 seconds
+12:49:21.342 Position Set                                 About to set Position property 3
+12:49:21.348 Position Set 3                               About to get Position property
+12:49:21.351 Position Set 3                               About to get Position property repeatedly
+12:49:25.175 Position Set 3                      OK       Reached position: 3 in: 3,8 seconds
+12:49:26.179 Position Set                                 About to set Position property 0
+12:49:26.185 Position Set 0                               About to get Position property
+12:49:26.188 Position Set 0                               About to get Position property repeatedly
+12:49:30.008 Position Set 0                      OK       Reached position: 0 in: 3,8 seconds
+12:49:31.023 
+12:49:31.023 Testing error conditions
+12:49:31.023 Position Set                                 About to set Position property
+12:49:31.037 Position Set                        OK       Correctly rejected bad position: -1
+12:49:31.038 Position Set                                 About to set Position property
+12:49:31.039 Position Set                        OK       Correctly rejected bad position: 7
+12:49:31.039 
+12:49:31.039 Directionality assessment
+12:49:31.039 Directionality                      INFO     The filter wheel is bi-directional.
+12:49:31.039 
+12:49:31.039 Disconnect from device
+12:49:31.040 Disconnect                                   About to get Connecting property
+12:49:31.040 Disconnect                                   About to call Disconnect() method
+12:49:31.041 Disconnect                                   About to get Connecting property repeatedly
+12:49:31.550 Disconnect                                   About to get Connected property
+12:49:31.551 Disconnect                          OK       Disconnected from device successfully using Disconnect()
+12:49:31.551 
+12:49:31.551 Conformance test has finished
+12:49:31.551 
+12:49:31.551 Congratulations, no errors, warnings or issues found: your driver passes ASCOM validation!!
+12:49:31.552 
+12:49:31.552 Timing Summary                               See Help for further information.
+12:49:31.552 Timing Summary                               FAST target response time: 0,1 seconds, (configuration and state reporting members).
+12:49:31.552 Timing Summary                               STANDARD target response time: 1,0 second, (property write and asynchronous initiators).
+12:49:31.552 Timing Summary                               EXTENDED target response time: 600,0 seconds, (synchronous methods, ImageArray and ImageArrayVariant).
+12:49:31.552 Timing Summary                               The log shows good and bad timings.
+12:49:31.552                                              
+12:49:31.552 Connect                                      At 12:48:40.210 Connect                  0,001 seconds. ✓ (STANDARD)
+12:49:31.552 InterfaceVersion                             At 12:48:40.721 InterfaceVersion         0,000 seconds. ✓ (FAST)
+12:49:31.552 Connected                                    At 12:48:40.721 Connected                0,000 seconds. ✓ (FAST)
+12:49:31.552 Description                                  At 12:48:40.723 Description              0,001 seconds. ✓ (FAST)
+12:49:31.552 DriverInfo                                   At 12:48:40.724 DriverInfo               0,001 seconds. ✓ (FAST)
+12:49:31.553 DriverVersion                                At 12:48:40.725 DriverVersion            0,001 seconds. ✓ (FAST)
+12:49:31.553 Name                                         At 12:48:40.727 Name                     0,001 seconds. ✓ (FAST)
+12:49:31.553 SupportedActions                             At 12:48:40.736 SupportedActions         0,009 seconds. ✓ (FAST)
+12:49:31.553 DeviceState                                  At 12:48:40.746 DeviceState              0,009 seconds. ✓ (FAST)
+12:49:31.553 FocusOffsets                                 At 12:48:42.269 FocusOffsets             0,001 seconds. ✓ (FAST)
+12:49:31.553 Names                                        At 12:48:42.271 Names                    0,001 seconds. ✓ (FAST)
+12:49:31.553 Position                                     At 12:48:42.274 Position                 0,002 seconds. ✓ (FAST)
+12:49:31.553 Move to position 0                           At 12:48:42.276 Move to position 0       0,001 seconds. ✓ (STANDARD)
+12:49:31.553 Move to position 1                           At 12:48:43.309 Move to position 1       0,006 seconds. ✓ (STANDARD)
+12:49:31.553 Move to position 2                           At 12:48:45.643 Move to position 2       0,005 seconds. ✓ (STANDARD)
+12:49:31.553 Move to position 3                           At 12:48:47.986 Move to position 3       0,006 seconds. ✓ (STANDARD)
+12:49:31.553 Move to position 4                           At 12:48:50.324 Move to position 4       0,005 seconds. ✓ (STANDARD)
+12:49:31.553 Move to position 5                           At 12:48:52.661 Move to position 5       0,006 seconds. ✓ (STANDARD)
+12:49:31.553 Move to position 6                           At 12:48:54.908 Move to position 6       0,006 seconds. ✓ (STANDARD)
+12:49:31.553 Move to position 6                           At 12:48:57.139 Move to position 6       0,000 seconds. ✓ (STANDARD)
+12:49:31.554 Move to position 5                           At 12:48:58.166 Move to position 5       0,006 seconds. ✓ (STANDARD)
+12:49:31.554 Move to position 4                           At 12:49:00.515 Move to position 4       0,006 seconds. ✓ (STANDARD)
+12:49:31.554 Move to position 3                           At 12:49:02.855 Move to position 3       0,005 seconds. ✓ (STANDARD)
+12:49:31.554 Move to position 2                           At 12:49:05.200 Move to position 2       0,006 seconds. ✓ (STANDARD)
+12:49:31.554 Move to position 1                           At 12:49:07.533 Move to position 1       0,006 seconds. ✓ (STANDARD)
+12:49:31.554 Move to position 0                           At 12:49:09.873 Move to position 0       0,006 seconds. ✓ (STANDARD)
+12:49:31.554 Move to position 0                           At 12:49:12.216 Move to position 0       0,000 seconds. ✓ (STANDARD)
+12:49:31.554 Move to position 6                           At 12:49:13.249 Move to position 6       0,006 seconds. ✓ (STANDARD)
+12:49:31.554 Move to position 5                           At 12:49:15.493 Move to position 5       0,005 seconds. ✓ (STANDARD)
+12:49:31.554 Move to position 0                           At 12:49:17.824 Move to position 0       0,006 seconds. ✓ (STANDARD)
+12:49:31.554 Move to position 3                           At 12:49:21.348 Move to position 3       0,006 seconds. ✓ (STANDARD)
+12:49:31.554 Move to position 0                           At 12:49:26.185 Move to position 0       0,005 seconds. ✓ (STANDARD)
+12:49:31.554 Disconnect                                   At 12:49:31.041 Disconnect               0,001 seconds. ✓ (STANDARD)
+12:49:31.554 
+12:49:31.555 Congratulations, all members returned within their target response times!!
