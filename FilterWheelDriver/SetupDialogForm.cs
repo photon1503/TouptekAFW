@@ -88,27 +88,32 @@ namespace ASCOM.photonTouptekAFW.FilterWheel
             }
 
             // select the current port if possible
-            if (comboBoxComPort.Items.Contains(FilterWheelHardware.comPort))
+            try
             {
-                comboBoxComPort.SelectedItem = FilterWheelHardware.comPort;
+                if (comboBoxComPort.Items.Contains(FilterWheelHardware.comPort))
+                {
+                    comboBoxComPort.SelectedItem = FilterWheelHardware.comPort;
+                }
             }
-
-            chkBidirectional.Checked = FilterWheelHardware.IsBidirectional;
+            catch (Exception ex)
+            {
+                tl.LogMessage("InitUI", $"Error setting COM port: {ex.Message}");
+                comboBoxComPort.SelectedIndex = -1; // No valid selection
+            }
 
             try
             {
-                if (FilterWheelHardware.slots == 5)
-                {
-                    cntSlots.SelectedIndex = 0;
-                }
-                else if (FilterWheelHardware.slots == 7)
-                {
-                    cntSlots.SelectedIndex = 1;
-                }
-                else if (FilterWheelHardware.slots == 8)
-                {
-                    cntSlots.SelectedIndex = 2;
-                }
+                chkBidirectional.Checked = FilterWheelHardware.IsBidirectional;
+            }
+            catch (Exception ex)
+            {
+                tl.LogMessage("InitUI", $"Error setting bidirectional: {ex.Message}");
+                chkBidirectional.Checked = false; // Default to unchecked if error occurs
+            }
+
+            try
+            {
+                cntSlots.SelectedValue = FilterWheelHardware.slots.ToString();
             }
             catch (Exception ex)
             {
