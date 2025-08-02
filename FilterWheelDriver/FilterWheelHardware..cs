@@ -135,7 +135,15 @@ namespace ASCOM.photonTouptekAFW.FilterWheel
                     throw new InvalidOperationException($"Failed to set filter wheel slots: {ex.Message}", ex);
                 }
 
-                CalibrateWheel();
+                try
+                {
+                    CalibrateWheel();
+                }
+                catch (Exception ex)
+                {
+                    LogMessage("InitialiseHardware", $"Exception calibrating filter wheel: {ex.Message}");
+                    throw new InvalidOperationException($"Failed to calibrate filter wheel: {ex.Message}", ex);
+                }
                 fwPosition = 0;
 
                 LogMessage("InitialiseHardware", $"One-off initialisation complete.");
@@ -166,7 +174,7 @@ namespace ASCOM.photonTouptekAFW.FilterWheel
                 }
                 if (position == -1)
                 {
-                    System.Threading.Thread.Sleep(100);
+                    System.Threading.Thread.Sleep(200);
                 }
             } while (position == -1);
         }
@@ -631,7 +639,12 @@ namespace ASCOM.photonTouptekAFW.FilterWheel
             {
                 LogMessage("Position Get", fwPosition.ToString());
 
-                afw.get_Option(Toupcam.eOPTION.OPTION_FILTERWHEEL_POSITION, out int position);
+                bool rc = afw.get_Option(Toupcam.eOPTION.OPTION_FILTERWHEEL_POSITION, out int position);
+                if (!rc)
+                {
+                    LogMessage("Position Get", "Failed to get filter wheel position.");
+                    return fwPosition; // Return the last known position if we can't get the current position
+                }
                 if (position > 0)
                 {
                     fwPosition = (short)position; // Update the current position from the hardware
@@ -652,8 +665,9 @@ namespace ASCOM.photonTouptekAFW.FilterWheel
                 if (IsBidirectional)
                     newSlotPosition |= 0x100;
 
-                afw.put_Option(Toupcam.eOPTION.OPTION_FILTERWHEEL_POSITION, newSlotPosition); // set the filter wheel to the requested slot (zero based)
-                fwPosition = value;
+                bool rc = afw.put_Option(Toupcam.eOPTION.OPTION_FILTERWHEEL_POSITION, newSlotPosition); // set the filter wheel to the requested slot (zero based)
+                if (rc)
+                    fwPosition = value;
             }
         }
 
