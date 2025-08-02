@@ -119,6 +119,12 @@ namespace ASCOM.photonTouptekAFW.FilterWheel
 
                 afw = Toupcam.Open(comPort);
 
+                if (afw == null)
+                {
+                    LogMessage("InitialiseHardware", "Failed to open filter wheel, check USB port and that the hardware is connected.");
+                    throw new InvalidOperationException("Failed to open filter wheel, check USB port and that the hardware is connected.");
+                }
+
                 try
                 {
                     afw.put_Option(eOPTION.OPTION_FILTERWHEEL_SLOT, slots);
@@ -128,10 +134,8 @@ namespace ASCOM.photonTouptekAFW.FilterWheel
                     LogMessage("InitialiseHardware", $"Exception setting filter wheel slots: {ex.Message}");
                     throw new InvalidOperationException($"Failed to set filter wheel slots: {ex.Message}", ex);
                 }
-                //afw.get_Option(eOPTION.OPTION_FILTERWHEEL_SLOT, out int slotsValue);
 
-                afw.put_Option(Toupcam.eOPTION.OPTION_FILTERWHEEL_POSITION, -1);  // Calibrate
-                WaitForCalibration(); // Wait for the filter wheel to move to the home position
+                CalibrateWheel();
                 fwPosition = 0;
 
                 LogMessage("InitialiseHardware", $"One-off initialisation complete.");
@@ -139,16 +143,25 @@ namespace ASCOM.photonTouptekAFW.FilterWheel
             }
         }
 
-        private static void WaitForCalibration()
+        private static void CalibrateWheel()
 
         {
-            int p = -1;
-            while (p == -1)
+            afw.put_Option(Toupcam.eOPTION.OPTION_FILTERWHEEL_POSITION, -1);  // Calibrate
+            int position;
+            bool rc = false;
+            do
             {
-                afw.get_Option(Toupcam.eOPTION.OPTION_FILTERWHEEL_POSITION, out int position);
-                p = position;
-                System.Threading.Thread.Sleep(100);
-            }
+                rc = afw.get_Option(Toupcam.eOPTION.OPTION_FILTERWHEEL_POSITION, out position);
+                if (!rc)
+                {
+                    LogMessage("CalibrateWheel", "Failed to get filter wheel position.");
+                    throw new InvalidOperationException("Failed to get filter wheel position.");
+                }
+                if (position == -1)
+                {
+                    System.Threading.Thread.Sleep(100);
+                }
+            } while (position == -1);
         }
 
         // PUBLIC COM INTERFACE IFilterWheelV3 IMPLEMENTATION
