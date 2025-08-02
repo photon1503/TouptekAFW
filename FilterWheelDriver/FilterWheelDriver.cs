@@ -358,6 +358,7 @@ namespace ASCOM.photonTouptekAFW.FilterWheel
 
                 LogMessage("Connect", "Calling Connect");
                 FilterWheelHardware.Connect(uniqueId);
+                connectedState = true; // Set the connected state to true after a successful connection
             }
             catch (Exception ex)
             {
@@ -447,6 +448,7 @@ namespace ASCOM.photonTouptekAFW.FilterWheel
 
                 LogMessage("Disconnect", "Calling Disconnect");
                 FilterWheelHardware.Disconnect(uniqueId);
+                connectedState = false; // Set the connected state to false after a successful disconnection
             }
             catch (Exception ex)
             {

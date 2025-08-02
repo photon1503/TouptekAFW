@@ -13,6 +13,7 @@ using ASCOM.Astrometry;
 using ASCOM.Astrometry.AstroUtils;
 using ASCOM.Astrometry.NOVAS;
 using ASCOM.DeviceInterface;
+using ASCOM.LocalServer;
 using ASCOM.Utilities;
 using System;
 using System.Collections;
@@ -44,8 +45,6 @@ namespace ASCOM.photonTouptekAFW.FilterWheel
         internal const string comPortDefault = "COM1";
         internal const string traceStateProfileName = "Trace Level";
         internal const string traceStateDefault = "true";
-
-        private static Toupcam afw = null;
 
         private static string DriverProgId = ""; // ASCOM DeviceID (COM ProgID) for this driver, the value is set by the driver's class initialiser.
         private static string DriverDescription = ""; // The value is set by the driver's class initialiser.
@@ -117,35 +116,6 @@ namespace ASCOM.photonTouptekAFW.FilterWheel
                 // Add your own "one off" device initialisation here e.g. validating existence of hardware and setting up communications
                 // If you are using a serial COM port you will find the COM port name selected by the user through the setup dialogue in the comPort variable.
 
-                afw = Toupcam.Open(comPort);
-
-                if (afw == null)
-                {
-                    LogMessage("InitialiseHardware", "Failed to open filter wheel, check USB port and that the hardware is connected.");
-                    throw new InvalidOperationException("Failed to open filter wheel, check USB port and that the hardware is connected.");
-                }
-
-                try
-                {
-                    afw.put_Option(eOPTION.OPTION_FILTERWHEEL_SLOT, slots);
-                }
-                catch (Exception ex)
-                {
-                    LogMessage("InitialiseHardware", $"Exception setting filter wheel slots: {ex.Message}");
-                    throw new InvalidOperationException($"Failed to set filter wheel slots: {ex.Message}", ex);
-                }
-
-                try
-                {
-                    CalibrateWheel();
-                }
-                catch (Exception ex)
-                {
-                    LogMessage("InitialiseHardware", $"Exception calibrating filter wheel: {ex.Message}");
-                    throw new InvalidOperationException($"Failed to calibrate filter wheel: {ex.Message}", ex);
-                }
-                fwPosition = 0;
-
                 LogMessage("InitialiseHardware", $"One-off initialisation complete.");
                 runOnce = true; // Set the flag to ensure that this code is not run again
             }
@@ -156,20 +126,27 @@ namespace ASCOM.photonTouptekAFW.FilterWheel
         {
             bool rc = false;
 
-            afw.put_Option(Toupcam.eOPTION.OPTION_FILTERWHEEL_POSITION, -1);  // Calibrate
+            SharedResources.sharedAFW.put_Option(Toupcam.eOPTION.OPTION_FILTERWHEEL_POSITION, -1);  // Calibrate
             if (!rc)
             {
                 LogMessage("CalibrateWheel", "Failed to start calibrate filter wheel.");
                 throw new InvalidOperationException("Failed to start calibrate filter wheel.");
             }
 
+            WaitForSpinningStopped();
+        }
+
+        private static void WaitForSpinningStopped()
+        {
+            bool rc = false;
+
             int position;
             do
             {
-                rc = afw.get_Option(Toupcam.eOPTION.OPTION_FILTERWHEEL_POSITION, out position);
+                rc = SharedResources.sharedAFW.get_Option(Toupcam.eOPTION.OPTION_FILTERWHEEL_POSITION, out position);
                 if (!rc)
                 {
-                    LogMessage("CalibrateWheel", "Failed to calibrate filter wheel.");
+                    LogMessage("Spinning", "Failed to calibrate filter wheel.");
                     throw new InvalidOperationException("Failed calibrate filter wheel.");
                 }
                 if (position == -1)
@@ -381,6 +358,7 @@ namespace ASCOM.photonTouptekAFW.FilterWheel
                 }
             });
             LogMessage("Connect", $"Connect task started OK");
+            //connectedState = true; // Set the connected state to true, this will be reset to false if the Connect task fails
         }
 
         /// <summary>
@@ -467,6 +445,29 @@ namespace ASCOM.photonTouptekAFW.FilterWheel
                     {
                         //
                         // Add hardware connect logic here
+                        SharedResources.sharedAFW = Toupcam.Open(comPort);
+
+                        WaitForSpinningStopped();
+
+                        if (SharedResources.sharedAFW == null)
+                        {
+                            LogMessage("SetConnected", "Failed to open filter wheel, check USB port and that the hardware is connected.");
+                            throw new InvalidOperationException("Failed to open filter wheel, check USB port and that the hardware is connected.");
+                        }
+
+                        try
+                        {
+                            SharedResources.sharedAFW.put_Option(eOPTION.OPTION_FILTERWHEEL_SLOT, slots);
+
+                            for (int i = 0; i < slots; i++)
+                                fwNames[i] = "Filter " + (i + 1).ToString();
+                        }
+                        catch (Exception ex)
+                        {
+                            LogMessage("SetConnected", $"Exception setting filter wheel slots: {ex.Message}");
+                            throw new InvalidOperationException($"Failed to set filter wheel slots: {ex.Message}", ex);
+                        }
+
                         //
                         LogMessage("SetConnected", $"Connecting to hardware.");
                     }
@@ -500,7 +501,8 @@ namespace ASCOM.photonTouptekAFW.FilterWheel
                     {
                         //
                         // Add hardware disconnect logic here
-                        afw?.Close();
+                        SharedResources.sharedAFW?.Close();
+                        LogMessage("SetConnected", $"Hardware disconnected.");
 
                         //
                     }
@@ -610,6 +612,14 @@ namespace ASCOM.photonTouptekAFW.FilterWheel
                     LogMessage("FocusOffsets Get", fwOffset.ToString());
                 }
 
+                // only return fwNames for the current number of slots
+                if (fwOffsets.Length > slots)
+                {
+                    int[] limitedFwOffsets = new int[slots];
+                    Array.Copy(fwOffsets, limitedFwOffsets, slots);
+                    fwOffsets = limitedFwOffsets;
+                }
+
                 return fwOffsets;
             }
         }
@@ -626,6 +636,13 @@ namespace ASCOM.photonTouptekAFW.FilterWheel
                     LogMessage("Names Get", fwName);
                 }
 
+                // only return fwNames for the current number of slots
+                if (fwNames.Length > slots)
+                {
+                    string[] limitedFwNames = new string[slots];
+                    Array.Copy(fwNames, limitedFwNames, slots);
+                    fwNames = limitedFwNames;
+                }
                 return fwNames;
             }
         }
@@ -639,13 +656,13 @@ namespace ASCOM.photonTouptekAFW.FilterWheel
             {
                 LogMessage("Position Get", fwPosition.ToString());
 
-                bool rc = afw.get_Option(Toupcam.eOPTION.OPTION_FILTERWHEEL_POSITION, out int position);
+                bool rc = SharedResources.sharedAFW.get_Option(Toupcam.eOPTION.OPTION_FILTERWHEEL_POSITION, out int position);
                 if (!rc)
                 {
                     LogMessage("Position Get", "Failed to get filter wheel position.");
                     return fwPosition; // Return the last known position if we can't get the current position
                 }
-                if (position > 0)
+                if (rc && position > 0)
                 {
                     fwPosition = (short)position; // Update the current position from the hardware
                 }
@@ -665,9 +682,12 @@ namespace ASCOM.photonTouptekAFW.FilterWheel
                 if (IsBidirectional)
                     newSlotPosition |= 0x100;
 
-                bool rc = afw.put_Option(Toupcam.eOPTION.OPTION_FILTERWHEEL_POSITION, newSlotPosition); // set the filter wheel to the requested slot (zero based)
+                bool rc = SharedResources.sharedAFW.put_Option(Toupcam.eOPTION.OPTION_FILTERWHEEL_POSITION, newSlotPosition); // set the filter wheel to the requested slot (zero based)
                 if (rc)
+                {
+                    LogMessage("Position Set", "Filter wheel position set to " + value.ToString());
                     fwPosition = value;
+                }
             }
         }
 

@@ -30,7 +30,7 @@ using System.Threading;
         (b) Camera ID (camId) may change due to connection or system restart. Enumerate the cameras to get the camera ID, and then call the Open function to pass in the camId parameter to open the camera.
 */
 
-internal class Toupcam : IDisposable
+public class Toupcam : IDisposable
 {
     [Flags]
     public enum eFLAG : ulong
