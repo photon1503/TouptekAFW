@@ -1,6 +1,6 @@
 // TODO fill in this information for your driver, then remove this line!
 //
-// ASCOM FilterWheel driver for photonTouptekAFW2
+// ASCOM FilterWheel driver for photonTouptekAFW
 //
 // Description:	 <To be completed by driver developer>
 //
@@ -11,6 +11,7 @@
 using ASCOM;
 using ASCOM.DeviceInterface;
 using ASCOM.LocalServer;
+using ASCOM.photonTouptekAFW2.FilterWheel;
 using ASCOM.Utilities;
 using System;
 using System.Collections;
@@ -24,14 +25,14 @@ namespace ASCOM.photonTouptekAFW2.FilterWheel
     // This code is mostly a presentation layer for the functionality in the FilterWheelHardware class. You should not need to change the contents of this file very much, if at all.
     // Most customisation will be in the FilterWheelHardware class, which is shared by all instances of the driver, and which must handle all aspects of communicating with your device.
     //
-    // Your driver's DeviceID is ASCOM.photonTouptekAFW2.FilterWheel
+    // Your driver's DeviceID is ASCOM.photonTouptekAFW.FilterWheel
     //
-    // The COM Guid attribute sets the CLSID for ASCOM.photonTouptekAFW2.FilterWheel
-    // The COM ClassInterface/None attribute prevents an empty interface called _photonTouptekAFW2 from being created and used as the [default] interface
+    // The COM Guid attribute sets the CLSID for ASCOM.photonTouptekAFW.FilterWheel
+    // The COM ClassInterface/None attribute prevents an empty interface called _photonTouptekAFW from being created and used as the [default] interface
     //
 
     /// <summary>
-    /// ASCOM FilterWheel Driver for photonTouptekAFW2.
+    /// ASCOM FilterWheel Driver for photonTouptekAFW.
     /// </summary>
     [ComVisible(true)]
     [Guid("65e796b0-afe0-4991-9969-48e6f0cac159")]
@@ -54,7 +55,7 @@ namespace ASCOM.photonTouptekAFW2.FilterWheel
         #region Initialisation and Dispose
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="photonTouptekAFW2"/> class. Must be public to successfully register for COM.
+        /// Initializes a new instance of the <see cref="photonTouptekAFW"/> class. Must be public to successfully register for COM.
         /// </summary>
         public FilterWheel()
         {
@@ -91,7 +92,7 @@ namespace ASCOM.photonTouptekAFW2.FilterWheel
             catch (Exception ex)
             {
                 LogMessage("FilterWheel", $"Initialisation exception: {ex}");
-                MessageBox.Show($"{ex.Message}", "Exception creating ASCOM.photonTouptekAFW2.FilterWheel", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"{ex.Message}", "Exception creating ASCOM.photonTouptekAFW.FilterWheel", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -358,6 +359,7 @@ namespace ASCOM.photonTouptekAFW2.FilterWheel
 
                 LogMessage("Connect", "Calling Connect");
                 FilterWheelHardware.Connect(uniqueId);
+                connectedState = true; // Set the connected state to true after a successful connection
             }
             catch (Exception ex)
             {
@@ -447,6 +449,7 @@ namespace ASCOM.photonTouptekAFW2.FilterWheel
 
                 LogMessage("Disconnect", "Calling Disconnect");
                 FilterWheelHardware.Disconnect(uniqueId);
+                connectedState = false; // Set the connected state to false after a successful disconnection
             }
             catch (Exception ex)
             {
