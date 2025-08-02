@@ -21,7 +21,8 @@ The standard Touptek filter wheel drivers have limitations when multiple devices
 2. Run the installer
 3. Select your devices by USB ID in your imaging software's ASCOM chooser
 
-*Requires ASCOM Platform 6.5 or later*
+## Screenshots
+
   ![Setup screen](image.png)
 
   ![Usage in NINA](image-1.png)
